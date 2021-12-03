@@ -7,3 +7,13 @@ def save(merchant):
     results = run_sql(sql, values)
     merchant.id = results[0]['id']
     return merchant
+
+def delete_all():
+    sql = "DELETE FROM merchants"
+    run_sql(sql)
+
+def update(merchant, name, description):
+    sql = "UPDATE merchants SET (name, description) = (%s, %s) WHERE id = %s"
+    values = [name, description, merchant.id]
+    run_sql(sql, values)
+    
