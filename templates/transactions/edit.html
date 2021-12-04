@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Edit Transaction:</h2>
-    <form action="/transactions/{{ transaction.id }}" method="post">
+    <form action="/transactions/{{ transaction.id }}/edit" method="post">
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" value="{{ transaction.date }}">
         <label for="time">Time:</label>
@@ -9,17 +9,29 @@
         <label for="amount_spent">Amount Spent (£):</label>
         <input type="text" id="amount_spent" name="amount_spent" value="{{ transaction.amount_spent }}">
         <label for="merchant">Merchant:</label>
-        <select name="merchant" id="merchant" value="{{ transaction.merchant.name }}">
-            {% for merchant in merchants %}
-                <option value="{{ merchant.name }}">{{ merchant.name }}</option>
-            {% endfor %}
+        <select name="merchant" id="merchant">
+           
+        {% for merchant in merchants %}
+        {% if  merchant.name == transaction.merchant.name %}
+            <option value="{{ merchant.name }}" selected>{{ merchant.name }}</option>
+        {% else %}
+            <option value="{{ merchant.name }}">{{ merchant.name }}</option>
+        {% endif %}
+            
+        {% endfor %}
+        
         </select>
         <label for="tag">Tag:</label>
         <select name="tag" id="tag" value="{{ transaction.tag.name }}">
             {% for tag in tags %}
-                <option value="{{ tag.name }}">{{ tag.name }}</option>
+            {% if tag.name == transaction.tag.name %}
+                <option value="{{ tag.name }}" selected>{{ tag.name }}</option>
+            {% else %}
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+            {% endif %}
+                
             {% endfor %}
         </select>
-        <button type="submit">Add</button>
+        <button type="submit">Update</button>
     </form>
 {% endblock content %}
