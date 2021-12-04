@@ -20,6 +20,16 @@ def edit_tag(id):
     tag = tag_repository.select(id)
     return render_template("tags/edit.html", tag = tag)
 
+@tags_blueprint.route("/tags/add")
+def add_tag():
+    return render_template("tags/add.html")
+
+@tags_blueprint.route("/tags/add", methods=['POST'])
+def new_tag():
+    tag = Tag(request.form['name'])
+    tag_repository.save(tag)
+    return redirect("/tags")
+
 @tags_blueprint.route("/tags/<id>/edit", methods=['POST'])
 def update_tag(id):
     tag = tag_repository.select(id)

@@ -4,6 +4,38 @@
 <p>Welcome! Below is a list of all your recent transactions.</p>
 <p>You can select a transaction to edit it or press the button below to add a new transaction.</p>
 
+<table>
+    <tr>
+        <th>Date</th>
+        <th></th>
+        <th>Time</th>
+        <th></th>
+        <th>Amount Spent</th>
+        <th></th>
+        <th>Merchant</th>
+        <th></th>
+        <th>Tag</th>
+        <th></th>
+        <th>Balance</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.date }}</td>
+        <td>|</td>
+        <td>{{ transaction.time }}</td>
+        <td>|</td>
+        <td>£{{ transaction.amount_spent }}</td>
+        <td>|</td>
+        <td>{{ transaction.merchant.name }}</td>
+        <td>|</td>
+        <td>{{ transaction.tag.name }}</td>
+        <td>|</td>
+    </tr>
+        
+    {% endfor %}
+</table>
+<form action="/transactions/edit"><button>Add New Transaction</button></form>
+
     
 {% endblock content %}
 
