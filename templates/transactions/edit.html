@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Update Transaction:</h2>
-
+    <h2>Edit Transaction:</h2>
+    <form action="/transactions/{{ transaction.id }}" method="post">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{{ transaction.date }}">
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" value="{{ transaction.time }}">
+        <label for="amount_spent">Amount Spent (£):</label>
+        <input type="text" id="amount_spent" name="amount_spent" value="{{ transaction.amount_spent }}">
+        <label for="merchant">Merchant:</label>
+        <select name="merchant" id="merchant" value="{{ transaction.merchant.name }}">
+            {% for merchant in merchants %}
+                <option value="{{ merchant.name }}">{{ merchant.name }}</option>
+            {% endfor %}
+        </select>
+        <label for="tag">Tag:</label>
+        <select name="tag" id="tag" value="{{ transaction.tag.name }}">
+            {% for tag in tags %}
+                <option value="{{ tag.name }}">{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Add</button>
+    </form>
 {% endblock content %}

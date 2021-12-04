@@ -30,7 +30,10 @@
         <td>|</td>
         <td>{{ transaction.tag.name }}</td>
         <td>|</td>
+        <td></td>
+        <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit Transaction</button></form></td>
     </tr>
+    
         
     {% endfor %}
 </table>

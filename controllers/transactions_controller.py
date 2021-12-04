@@ -31,3 +31,8 @@ def new_transaction():
     transaction = Transaction(date, time, amount_spent, merchant, tag)
     transaction_repository.save(transaction)
     return redirect("/transactions")
+
+@transactions_blueprint.route("/transactions/<id>/edit")
+def edit_transaction(id):
+    transaction = transaction_repository.select(id)
+    return render_template("transactions/edit.html", transaction = transaction)
