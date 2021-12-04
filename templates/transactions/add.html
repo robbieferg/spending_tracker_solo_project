@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Add Transaction:</h2>
+<form action="/transactions/add" method="post">
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date">
+    <label for="time">Time:</label>
+    <input type="time" id="time" name="time">
+    <label for="amount_spent">Amount Spent (£):</label>
+    <input type="text" id="amount_spent" name="amount_spent">
+    <select name="merchant" id="merchant">
+        <option value="none">None</option>
+        {% for merchant in merchants %}
+            <option value="{{ merchant.name }}">{{ merchant.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="tag" id="tag">
+        <option value="none">None</option>
+        {% for tag in tags %}
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Add</button>
+</form>
+
+
+{% endblock content %}
