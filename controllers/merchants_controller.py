@@ -14,3 +14,14 @@ def merchants():
 def delete_merchant(id):
     merchant_repository.delete(id)
     return redirect("/merchants")
+
+@merchants_blueprint.route("/merchants/<id>/edit")
+def edit_merchant(id):
+    merchant = merchant_repository.select(id)
+    return render_template("merchants/edit.html", merchant = merchant)
+
+@merchants_blueprint.route("/merchants/<id>/edit", methods=['POST'])
+def update_merchant(id):
+    merchant = merchant_repository.select(id)
+    merchant_repository.update(merchant, request.form['name'], request.form['description'])
+    return redirect("/merchants")

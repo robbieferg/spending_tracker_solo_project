@@ -4,8 +4,9 @@
 <p>Below is a list of all your currently saved tags:</p>
 <ul>
     {% for tag in tags %}
-        {{ tag.name }} <form class="delete-form" action="/tags/{{ tag.id }}/delete"> <button>Delete</button>
-        </form> <br>
+        {{ tag.name }} <form class="delete-form" action="/tags/{{ tag.id }}/delete"> <button>Delete</button></form> 
+        <form action="/tags/{{ tag.id }}/edit"><button>Edit</button></form>
+        <hr>
     {% endfor %}
 </ul>
     

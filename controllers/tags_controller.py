@@ -14,3 +14,15 @@ def tags():
 def delete_tag(id):
     tag_repository.delete(id)
     return redirect("/tags")
+
+@tags_blueprint.route("/tags/<id>/edit")
+def edit_tag(id):
+    tag = tag_repository.select(id)
+    return render_template("tags/edit.html", tag = tag)
+
+@tags_blueprint.route("/tags/<id>/edit", methods=['POST'])
+def update_tag(id):
+    tag = tag_repository.select(id)
+    tag_repository.update(tag, request.form['name'])
+    return redirect("/tags")
+
