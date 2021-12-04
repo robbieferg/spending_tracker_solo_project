@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Tags</h2>
+<p>Below is a list of all your currently saved tags:</p>
+<ul>
+    {% for tag in tags %}
+        {{ tag.name }} <form class="delete-form" action="/tags/{{ tag.id }}/delete"> <button>Delete</button>
+        </form> <br>
+    {% endfor %}
+</ul>
+    
+{% endblock content %}
