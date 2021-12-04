@@ -20,7 +20,6 @@ merchant_repository.save(merchant_2)
 merchant_3 = Merchant("Amazon", "Online Superstore")
 merchant_repository.save(merchant_3)
 
-merchant_repository.update(merchant_1, "Ladbrokes", "Bookmaker")
 
 tag_1 = Tag("Groceries")
 tag_repository.save(tag_1)
@@ -31,7 +30,6 @@ tag_repository.save(tag_2)
 tag_3 = Tag("Gaming")
 tag_repository.save(tag_3)
 
-tag_repository.update(tag_2, "Home Media")
 
 transaction_1 = Transaction("04/12/2021", 12.50, merchant_1, tag_2)
 transaction_repository.save(transaction_1)

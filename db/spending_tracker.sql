@@ -18,6 +18,6 @@ CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     date VARCHAR(255),
     amount_spent FLOAT,
-    merchant_id INT REFERENCES merchants(id),
-    tag_id INT REFERENCES tags(id)
+    merchant_id INT REFERENCES merchants(id) ON DELETE CASCADE,
+    tag_id INT REFERENCES tags(id) ON DELETE CASCADE
 );

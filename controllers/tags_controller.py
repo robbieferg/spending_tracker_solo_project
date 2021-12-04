@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask import Blueprint
-from werkzeug.utils import redirect
 from models.tag import Tag
 import repositories.tag_repository as tag_repository
 

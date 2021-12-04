@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>My Merchants</h2>
+    <p>Below is a list of all your saved merchants:</p>
+    <ul>
+        {% for merchant in merchants %}
+            <div class="merchant">
+                <div class="content">
+                    <b>Name: </b>{{ merchant.name }}</a> <b>Description: </b> {{ merchant.description }} 
+                    <form class="delete-form" action="/merchants/{{ merchant.id }}/delete" method='post'><button class="delete-button">Delete</button></form>
+                    <hr>
+                </div>
+
+            </div>
+        {% endfor %}
+    </ul>
+{% endblock content %}
