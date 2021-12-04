@@ -8,12 +8,14 @@
     <input type="time" id="time" name="time">
     <label for="amount_spent">Amount Spent (£):</label>
     <input type="text" id="amount_spent" name="amount_spent">
+    <label for="merchant">Merchant:</label>
     <select name="merchant" id="merchant">
         <option value="none">None</option>
         {% for merchant in merchants %}
             <option value="{{ merchant.name }}">{{ merchant.name }}</option>
         {% endfor %}
     </select>
+    <label for="tag">Tag:</label>
     <select name="tag" id="tag">
         <option value="none">None</option>
         {% for tag in tags %}

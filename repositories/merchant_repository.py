@@ -28,6 +28,16 @@ def select(id):
         merchant = Merchant(result['name'], result['description'], result['id'])
     return merchant
 
+def select(name):
+    merchant = None
+    sql = "SELECT * FROM merchants WHERE name = %s"
+    values = [name]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        merchant = Merchant(result['name'], result['description'], result['id'])
+    return merchant
+
 def update(merchant, new_name, new_description):
     sql = "UPDATE merchants SET (name, description) = (%s, %s) WHERE id = %s"
     values = [new_name, new_description, merchant.id]

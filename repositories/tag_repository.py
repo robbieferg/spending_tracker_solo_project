@@ -28,6 +28,16 @@ def select(id):
         tag = Tag(result['name'], result['id'])
     return tag
 
+def select(name):
+    tag = None
+    sql = "SELECT * FROM tags WHERE name = %s"
+    values = [name]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        tag = Tag(result['name'], result['id'])
+    return tag
+
 def update(tag, new_name):
     sql = "UPDATE tags SET name = %s WHERE id = %s"
     values = [new_name, tag.id]
