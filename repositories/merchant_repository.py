@@ -28,7 +28,7 @@ def select(id):
         merchant = Merchant(result['name'], result['description'], result['id'])
     return merchant
 
-def select(name):
+def select_by_name(name):
     merchant = None
     sql = "SELECT * FROM merchants WHERE name = %s"
     values = [name]

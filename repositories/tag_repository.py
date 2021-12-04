@@ -28,7 +28,7 @@ def select(id):
         tag = Tag(result['name'], result['id'])
     return tag
 
-def select(name):
+def select_by_name(name):
     tag = None
     sql = "SELECT * FROM tags WHERE name = %s"
     values = [name]
