@@ -12,7 +12,11 @@ transactions_blueprint = Blueprint("transactions", __name__)
 @transactions_blueprint.route("/transactions")
 def transactions():
     transactions = transaction_repository.select_all()
-    return render_template("transactions/index.html", transactions = transactions)
+    total_spent = 0
+    for transaction in transactions:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(total_spent)
+    return render_template("transactions/index.html", transactions = transactions, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
