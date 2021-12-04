@@ -31,9 +31,9 @@ tag_3 = Tag("Gaming")
 tag_repository.save(tag_3)
 
 
-transaction_1 = Transaction("04/12/2021", 12.50, merchant_1, tag_2)
+transaction_1 = Transaction("04/12/2021", "15:35", 12.50, merchant_1, tag_2)
 transaction_repository.save(transaction_1)
-transaction_2 = Transaction("11/11/2021", 35.75, merchant_3, tag_3)
+transaction_2 = Transaction("11/11/2021", "15:35", 35.75, merchant_3, tag_3)
 transaction_repository.save(transaction_2)
 
 
