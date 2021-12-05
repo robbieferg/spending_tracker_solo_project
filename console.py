@@ -2,6 +2,7 @@ import pdb
 from models.merchant import Merchant
 from models.tag import Tag
 from models.transaction import Transaction
+from datetime import datetime
 
 import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
@@ -35,6 +36,8 @@ transaction_1 = Transaction("04/12/2021", "15:35", 12.50, merchant_1, tag_2)
 transaction_repository.save(transaction_1)
 transaction_2 = Transaction("11/11/2021", "15:35", 35.75, merchant_3, tag_3)
 transaction_repository.save(transaction_2)
+
+
 
 
 

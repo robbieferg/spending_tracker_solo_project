@@ -50,7 +50,7 @@ def update_transaction(id):
     tag = tag_repository.select_by_name(str(request.form['tag']))
     new_date = request.form['date']
     new_date = datetime.datetime.strptime(new_date, '%Y-%m-%d').strftime('%d/%m/%Y')
-    transaction_repository.update(transaction, new_date, request.form['time'], request.form['amount_spent'], merchant.id, tag.id)
+    transaction_repository.update(transaction, new_date, request.form['time'], request.form['amount_spent'], merchant.id, tag.id, transaction.timestamp)
     return redirect("/transactions")
 
 @transactions_blueprint.route("/transactions/<id>/delete")

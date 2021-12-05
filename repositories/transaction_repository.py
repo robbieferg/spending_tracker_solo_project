@@ -4,8 +4,8 @@ import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
 
 def save(transaction):
-    sql = "INSERT INTO transactions (date, time, amount_spent, merchant_id, tag_id) VALUES (%s, %s, %s, %s, %s) RETURNING id"
-    values = [transaction.date, transaction.time, transaction.amount_spent, transaction.merchant.id, transaction.tag.id]
+    sql = "INSERT INTO transactions (date, time, amount_spent, merchant_id, tag_id, timestamp) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id"
+    values = [transaction.date, transaction.time, transaction.amount_spent, transaction.merchant.id, transaction.tag.id, transaction.timestamp]
     results = run_sql(sql, values)
     transaction.id = results[0]['id']
     return transaction
@@ -17,7 +17,7 @@ def select_all():
     for row in results:
         merchant = merchant_repository.select(row['merchant_id'])
         tag = tag_repository.select(row['tag_id'])
-        transaction = Transaction(row['date'], row['time'], row['amount_spent'], merchant, tag, row['id'])
+        transaction = Transaction(row['date'], row['time'], row['amount_spent'], merchant, tag, row['id'], row['timestamp'])
         transactions.append(transaction)
     return transactions
 
@@ -29,13 +29,13 @@ def select(id):
     if result is not None:
         merchant = merchant_repository.select(result['merchant_id'])
         tag = tag_repository.select(result['tag_id'])
-        transaction = Transaction(result['date'], result['time'], result['amount_spent'], merchant, tag, result['id'])
+        transaction = Transaction(result['date'], result['time'], result['amount_spent'], merchant, tag, result['id'], result['timestamp'])
     return transaction
 
 
 def update(transaction, new_date, new_time, new_amount_spent, new_merchant, new_tag):
-    sql = "UPDATE transactions SET (date, time, amount_spent, merchant_id, tag_id) = (%s, %s, %s, %s, %s) WHERE id = %s"
-    values = (new_date, new_time, new_amount_spent, new_merchant, new_tag, transaction.id)
+    sql = "UPDATE transactions SET (date, time, amount_spent, merchant_id, tag_id, timestamp) = (%s, %s, %s, %s, %s, %s) WHERE id = %s"
+    values = (new_date, new_time, new_amount_spent, new_merchant, new_tag, transaction.id, transaction.timestamp)
     run_sql(sql, values)
 
 def delete_all():

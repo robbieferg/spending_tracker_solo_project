@@ -1,3 +1,5 @@
+import datetime
+
 DROP TABLE transactions;
 DROP TABLE merchants;
 DROP TABLE tags;
@@ -22,5 +24,6 @@ CREATE TABLE transactions (
     time VARCHAR(255),
     amount_spent DECIMAL,
     merchant_id INT REFERENCES merchants(id) ON DELETE CASCADE,
-    tag_id INT REFERENCES tags(id) ON DELETE CASCADE
+    tag_id INT REFERENCES tags(id) ON DELETE CASCADE,
+    timestamp VARCHAR(255)
 );
