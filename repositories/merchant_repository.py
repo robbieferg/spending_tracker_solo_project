@@ -14,7 +14,7 @@ def select_all():
     sql = "SELECT * FROM merchants"
     results = run_sql(sql)
     for row in results:
-        merchant = Merchant(row['name'], row['description'], row['id'])
+        merchant = Merchant(row['name'], row['description'], row['active'], row['id'])
         merchants.append(merchant)
     return merchants
 
@@ -25,7 +25,7 @@ def select(id):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        merchant = Merchant(result['name'], result['description'], result['id'])
+        merchant = Merchant(result['name'], result['description'], result['active'], result['id'])
     return merchant
 
 def select_by_name(name):
@@ -35,12 +35,12 @@ def select_by_name(name):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        merchant = Merchant(result['name'], result['description'], result['id'])
+        merchant = Merchant(result['name'], result['description'], result['active'], result['id'])
     return merchant
 
-def update(merchant, new_name, new_description):
-    sql = "UPDATE merchants SET (name, description) = (%s, %s) WHERE id = %s"
-    values = [new_name, new_description, merchant.id]
+def update(merchant, new_name, new_description, new_active):
+    sql = "UPDATE merchants SET (name, description, active) = (%s, %s, %s, %s) WHERE id = %s"
+    values = [new_name, new_description, new_active, merchant.id]
     run_sql(sql, values)
 
 def delete_all():

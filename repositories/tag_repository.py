@@ -13,7 +13,7 @@ def select_all():
     sql = "SELECT * FROM tags"
     results = run_sql(sql)
     for row in results:
-        tag = Tag(row['name'], row['id'])
+        tag = Tag(row['name'], row['active'], row['id'])
         tags.append(tag)
     return tags
 
@@ -25,7 +25,7 @@ def select(id):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        tag = Tag(result['name'], result['id'])
+        tag = Tag(result['name'], result['active'], result['id'])
     return tag
 
 def select_by_name(name):
@@ -35,12 +35,12 @@ def select_by_name(name):
     result = run_sql(sql, values)[0]
 
     if result is not None:
-        tag = Tag(result['name'], result['id'])
+        tag = Tag(result['name'], result['active'], result['id'])
     return tag
 
-def update(tag, new_name):
-    sql = "UPDATE tags SET name = %s WHERE id = %s"
-    values = [new_name, tag.id]
+def update(tag, new_name, new_active):
+    sql = "UPDATE tags SET (name, active) = (%s, %s) WHERE id = %s"
+    values = [new_name, new_active, tag.id]
     run_sql(sql, values)
 
 def delete_all():

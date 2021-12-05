@@ -11,7 +11,8 @@ CREATE TABLE merchants (
 
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+    active BOOLEAN
 );
 
 CREATE TABLE transactions (
@@ -20,5 +21,6 @@ CREATE TABLE transactions (
     time VARCHAR(255),
     amount_spent DECIMAL,
     merchant_id INT REFERENCES merchants(id) ON DELETE CASCADE,
-    tag_id INT REFERENCES tags(id) ON DELETE CASCADE
+    tag_id INT REFERENCES tags(id) ON DELETE CASCADE,
+    active BOOLEAN
 );
