@@ -10,13 +10,13 @@
     <input type="text" id="amount_spent" name="amount_spent">
     <label for="merchant">Merchant:</label>
     <select name="merchant" id="merchant">
-        {% for merchant in merchants %}
+        {% for merchant in valid_merchants %}
             <option value="{{ merchant.name }}">{{ merchant.name }}</option>
         {% endfor %}
     </select>
     <label for="tag">Tag:</label>
     <select name="tag" id="tag">
-        {% for tag in tags %}
+        {% for tag in valid_tags %}
             <option value="{{ tag.name }}">{{ tag.name }}</option>
         {% endfor %}
     </select>

@@ -11,7 +11,7 @@
         <label for="merchant">Merchant:</label>
         <select name="merchant" id="merchant">
            
-        {% for merchant in merchants %}
+        {% for merchant in valid_merchants %}
         {% if  merchant.name == transaction.merchant.name %}
             <option value="{{ merchant.name }}" selected>{{ merchant.name }}</option>
         {% else %}
@@ -23,7 +23,7 @@
         </select>
         <label for="tag">Tag:</label>
         <select name="tag" id="tag" value="{{ transaction.tag.name }}">
-            {% for tag in tags %}
+            {% for tag in valid_tags %}
             {% if tag.name == transaction.tag.name %}
                 <option value="{{ tag.name }}" selected>{{ tag.name }}</option>
             {% else %}
