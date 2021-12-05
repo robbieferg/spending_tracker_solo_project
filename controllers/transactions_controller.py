@@ -6,12 +6,14 @@ import repositories.transaction_repository as transaction_repository
 import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
 import datetime
+from operator import attrgetter
 
 transactions_blueprint = Blueprint("transactions", __name__)
 
 @transactions_blueprint.route("/transactions")
 def transactions():
     transactions = transaction_repository.select_all()
+    transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     
     total_spent = 0
     for transaction in transactions:
@@ -19,7 +21,7 @@ def transactions():
     total_spent = "{:,}".format(round(total_spent, 2))
     
     
-    return render_template("transactions/index.html", transactions = transactions, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_by_time = transactions_by_time, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
