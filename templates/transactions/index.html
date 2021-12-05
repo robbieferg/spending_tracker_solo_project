@@ -7,6 +7,7 @@
 <h3>Sort by:</h3>
 <p><a href="/transactions">Date & Time (Old to New)</a>  <a href="/transactions/sort_by_date_time_reversed">Date & Time (New to Old)</a>  <a href="/transactions/sort_by_merchant">Merchant</a> <a href="/transactions/sort_by_tag">Tag</a></p>  
 
+
 <table>
     <tr>
         <th>Date</th>
@@ -47,6 +48,16 @@
 <br>
 <br>
 <form action="/transactions/add"><button>Add New Transaction</button></form>
+<br>
+<p><b>View all transactions from a specific month: </b>
+    <select name="month" id="month">
+        {% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+        {% for month in months %}
+            <option value="{{ month }}">{{ month }}</option>
+            
+        {% endfor %}
+    
+    </select></p>
 
 
     
