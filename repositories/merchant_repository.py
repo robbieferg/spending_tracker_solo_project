@@ -2,8 +2,8 @@ from db.run_sql import run_sql
 from models.merchant import Merchant
 
 def save(merchant):
-    sql = "INSERT INTO merchants(name, description) VALUES (%s, %s) RETURNING id"
-    values = [merchant.name, merchant.description]
+    sql = "INSERT INTO merchants(name, description, active) VALUES (%s, %s, %s) RETURNING id"
+    values = [merchant.name, merchant.description, merchant.active]
     results = run_sql(sql, values)
     merchant.id = results[0]['id']
     return merchant
@@ -39,7 +39,7 @@ def select_by_name(name):
     return merchant
 
 def update(merchant, new_name, new_description, new_active):
-    sql = "UPDATE merchants SET (name, description, active) = (%s, %s, %s, %s) WHERE id = %s"
+    sql = "UPDATE merchants SET (name, description, active) = (%s, %s, %s) WHERE id = %s"
     values = [new_name, new_description, new_active, merchant.id]
     run_sql(sql, values)
 

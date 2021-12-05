@@ -9,7 +9,6 @@
         <hr>
     {% endfor %}
 </ul>
-<form action="/tags/add"><button>Add New Tag</button></form>
 <br>
 <br>
 <h3>Deactivated Tags:</h3>
@@ -18,5 +17,7 @@
         {{ tag.name }} <form action="/tags/{{ tag.id }}/delete"> <button>Delete</button></form> <form action="/tags/{{ tag.id }}/reactivate"> <button>Reactivate</button></form> 
     {% endfor %}
 </ul>
+<hr>
+<form action="/tags/add"><button>Add New Tag</button></form>
     
 {% endblock content %}
