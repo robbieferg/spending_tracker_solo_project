@@ -100,3 +100,17 @@ def sort_by_tag():
     total_spent = "{:,}".format(round(total_spent, 2))
 
     return render_template("transactions/index.html", transactions = transaction_list, total_spent = total_spent)
+
+@transactions_blueprint.route("/transactions/sort_by_date_time_reversed")
+def sort_by_time_reversed():
+    transactions = transaction_repository.select_all()
+    transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
+    transactions_by_time.reverse()
+
+    total_spent = 0
+    for transaction in transactions:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(round(total_spent, 2))
+    
+    
+    return render_template("transactions/index.html", transactions = transactions_by_time, total_spent = total_spent)
