@@ -50,14 +50,11 @@
 <form action="/transactions/add"><button>Add New Transaction</button></form>
 <br>
 <p><b>View all transactions from a specific month: </b>
-    <select name="month" id="month">
         {% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
         {% for month in months %}
-            <option value="{{ month }}">{{ month }}</option>
-            
+            <a href="/transactions/{{ month }}/filter_month">{{ month }}</a>
         {% endfor %}
-    
-    </select></p>
+    </p>
 
 
     

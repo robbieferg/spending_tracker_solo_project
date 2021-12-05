@@ -5,7 +5,7 @@ from models.transaction import Transaction
 import repositories.transaction_repository as transaction_repository
 import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
-import datetime
+from datetime import datetime
 from operator import attrgetter
 
 transactions_blueprint = Blueprint("transactions", __name__)
@@ -32,7 +32,7 @@ def add_transaction():
 @transactions_blueprint.route("/transactions/add", methods=['POST'])
 def new_transaction():
     date = str(request.form['date'])
-    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y')
+    date = datetime.strptime(date, '%Y-%m-%d').strftime('%d/%m/%Y')
     time = str(request.form['time'])
     amount_spent = request.form['amount_spent']
     merchant = merchant_repository.select_by_name(request.form['merchant'])
@@ -114,3 +114,20 @@ def sort_by_time_reversed():
     
     
     return render_template("transactions/index.html", transactions = transactions_by_time, total_spent = total_spent)
+
+@transactions_blueprint.route("/transactions/<month_name>/filter_month")
+def filter_by_month(month_name):
+    transactions = transaction_repository.select_all()
+    transactions_by_month = []
+    months = {"January" : "1", "February" : "2", "March" : "3", "April" : "4", "May" : "5", "June" : "6", "July" : "7", "August" : "8", "September" : "9", "October" : "10", "November" : "11", "December" : "12"}
+    for transaction in transactions:
+        month = transaction.timestamp.month
+        
+        if str(month) == months[month_name]:
+            transactions_by_month.append(transaction)
+    
+    total_spent = 0
+    for transaction in transactions_by_month:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(round(total_spent, 2))
+    return render_template("transactions/index.html", transactions = transactions_by_month, total_spent = total_spent)

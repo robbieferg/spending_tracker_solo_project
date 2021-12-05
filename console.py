@@ -37,6 +37,9 @@ transaction_repository.save(transaction_1)
 transaction_2 = Transaction("11/11/2021", "15:35", 35.75, merchant_3, tag_3)
 transaction_repository.save(transaction_2)
 
+month = transaction_1.timestamp.month
+print(month)
+
 
 
 
