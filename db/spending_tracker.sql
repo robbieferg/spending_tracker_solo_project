@@ -1,8 +1,8 @@
-import datetime
 
 DROP TABLE transactions;
 DROP TABLE merchants;
 DROP TABLE tags;
+
 
 
 CREATE TABLE merchants (
