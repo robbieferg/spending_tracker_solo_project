@@ -2,8 +2,8 @@ from db.run_sql import run_sql
 from models.tag import Tag
 
 def save(tag):
-    sql = "INSERT INTO tags (name) VALUES (%s) RETURNING id"
-    values = [tag.name]
+    sql = "INSERT INTO tags (name, active) VALUES (%s, %s) RETURNING id"
+    values = [tag.name, tag.active]
     results = run_sql(sql, values)
     tag.id = results[0]['id']
     return tag

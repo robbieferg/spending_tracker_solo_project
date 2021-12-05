@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>My Tags</h2>
-<p>Below is a list of all your currently saved tags:</p>
+<h3>Active Tags:</h3>
 <ul>
-    {% for tag in tags %}
-        {{ tag.name }} <form class="delete-form" action="/tags/{{ tag.id }}/delete"> <button>Delete</button></form> 
+    {% for tag in active_tags %}
+        {{ tag.name }} <form action="/tags/{{ tag.id }}/deactivate"> <button>Deactivate</button></form> 
         <form action="/tags/{{ tag.id }}/edit"><button>Edit</button></form>
         <hr>
     {% endfor %}
 </ul>
 <form action="/tags/add"><button>Add New Tag</button></form>
+<br>
+<br>
+<h3>Deactivated Tags:</h3>
+<ul>
+    {% for tag in deactivated_tags %}
+        {{ tag.name }} <form action="/tags/{{ tag.id }}/delete"> <button>Delete</button></form> <form action="/tags/{{ tag.id }}/reactivate"> <button>Reactivate</button></form> 
+    {% endfor %}
+</ul>
     
 {% endblock content %}
