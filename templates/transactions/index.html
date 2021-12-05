@@ -10,13 +10,13 @@
         <th></th>
         <th>Time</th>
         <th></th>
-        <th>Amount Spent</th>
-        <th></th>
         <th>Merchant</th>
         <th></th>
         <th>Tag</th>
         <th></th>
-        <th>Balance</th>
+        <th>Amount Spent</th>
+        <th></th>
+       
     </tr>
     {% for transaction in transactions %}
     <tr>
@@ -24,14 +24,16 @@
         <td>|</td>
         <td>{{ transaction.time }}</td>
         <td>|</td>
-        <td>£{{ transaction.amount_spent }}</td>
-        <td>|</td>
         <td>{{ transaction.merchant.name }}</td>
         <td>|</td>
         <td>{{ transaction.tag.name }}</td>
         <td>|</td>
+        <td>£{{ transaction.amount_spent }}</td>
+        <td>|</td>
         <td></td>
-        <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit Transaction</button></form></td>
+        <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit Transaction</button></form></td> 
+        <td><form class="delete-form" action="/transactions/{{ transaction.id }}/delete"> <button>Delete Transaction</button></form></td> 
+
     </tr>
     
         
