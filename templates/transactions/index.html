@@ -22,7 +22,7 @@
         <th></th>
        
     </tr>
-    {% for transaction in transactions %}
+    {% for transaction in transactions_selected %}
     <tr>
         <td>{{ transaction.date }}</td>
         <td>|</td>
@@ -55,7 +55,19 @@
             <a href="/transactions/{{ month }}/filter_month">{{ month }}</a>
         {% endfor %}
     </p>
-
+<p><b>View all transactions by merchant: </b>
+        {% set merchants = [] %}
+        {% for transaction in transactions_all %}
+            {% if transaction.merchant.name not in merchants %}
+                {% set merchants = merchants.append(transaction.merchant) %}
+            {% endif %}
+        {% endfor %}
+        {% for merchant  in merchants %}
+            <a href="/transactions/{{ merchant.name }}/filter_merchant">{{ merchant.name }}</a>
+        {% endfor %}
+            
+        
+</p>
 
     
 {% endblock content %}

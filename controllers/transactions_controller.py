@@ -21,7 +21,7 @@ def transactions():
     total_spent = "{:,}".format(round(total_spent, 2))
     
     
-    return render_template("transactions/index.html", transactions = transactions_by_time, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
@@ -80,7 +80,7 @@ def sort_by_merchant():
         total_spent += float(transaction.amount_spent)
     total_spent = "{:,}".format(round(total_spent, 2))
 
-    return render_template("transactions/index.html", transactions = transaction_list, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/sort_by_tag")
 def sort_by_tag():
@@ -99,7 +99,7 @@ def sort_by_tag():
         total_spent += float(transaction.amount_spent)
     total_spent = "{:,}".format(round(total_spent, 2))
 
-    return render_template("transactions/index.html", transactions = transaction_list, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/sort_by_date_time_reversed")
 def sort_by_time_reversed():
@@ -113,7 +113,7 @@ def sort_by_time_reversed():
     total_spent = "{:,}".format(round(total_spent, 2))
     
     
-    return render_template("transactions/index.html", transactions = transactions_by_time, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/<month_name>/filter_month")
 def filter_by_month(month_name):
@@ -130,4 +130,19 @@ def filter_by_month(month_name):
     for transaction in transactions_by_month:
         total_spent += float(transaction.amount_spent)
     total_spent = "{:,}".format(round(total_spent, 2))
-    return render_template("transactions/index.html", transactions = transactions_by_month, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_month, total_spent = total_spent)
+
+@transactions_blueprint.route("/transactions/<merchant_name>/filter_merchant")
+def filter_by_merchant(merchant_name):
+    transactions = transaction_repository.select_all()
+    transactions_by_merchant = []
+    for transaction in transactions:
+        if transaction.merchant.name == merchant_name:
+            transactions_by_merchant.append(transaction)
+
+    total_spent = 0
+    for transaction in transactions_by_merchant:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(round(total_spent, 2))
+
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent)
