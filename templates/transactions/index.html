@@ -4,6 +4,9 @@
 <p>Welcome! Below is a list of all your recent transactions.</p>
 <p>You can select a transaction to edit it or press the button below to add a new transaction.</p>
 
+<h3>Sort by:</h3>
+<p><a href="/transactions/sort_by_merchant">Merchant</a></p>
+
 <table>
     <tr>
         <th>Date</th>
@@ -18,7 +21,7 @@
         <th></th>
        
     </tr>
-    {% for transaction in transactions_by_time %}
+    {% for transaction in transactions %}
     <tr>
         <td>{{ transaction.date }}</td>
         <td>|</td>

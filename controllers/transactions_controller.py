@@ -21,7 +21,7 @@ def transactions():
     total_spent = "{:,}".format(round(total_spent, 2))
     
     
-    return render_template("transactions/index.html", transactions_by_time = transactions_by_time, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions = transactions_by_time, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
@@ -62,3 +62,17 @@ def update_transaction(id):
 def delete_transaction(id):
     transaction_repository.delete(id)
     return redirect("/transactions")
+
+@transactions_blueprint.route("/transactions/sort_by_merchant")
+def sort_by_merchant():
+    transactions = transaction_repository.select_all()
+    transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
+    merchants = merchant_repository.select_all()
+    merchants_sorted = sorted(merchants, key=attrgetter('name'))
+    transaction_list = []
+    for merchant in merchants_sorted:
+        for transaction in transactions_by_time:
+            if transaction.merchant.name == merchant.name:
+                transaction_list.append(transaction)
+
+    return render_template("transactions/index.html", transactions = transaction_list)
