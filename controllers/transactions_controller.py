@@ -7,6 +7,7 @@ import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
 from datetime import datetime
 from operator import attrgetter
+import models.total_spend_calculator as calculator
 
 transactions_blueprint = Blueprint("transactions", __name__)
 
@@ -15,10 +16,7 @@ def transactions():
     transactions = transaction_repository.select_all()
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     
-    total_spent = 0
-    for transaction in transactions:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions)
     
     
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
@@ -75,10 +73,7 @@ def sort_by_merchant():
             if transaction.merchant.name == merchant.name:
                 transaction_list.append(transaction)
 
-    total_spent = 0
-    for transaction in transactions:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
 
@@ -94,10 +89,7 @@ def sort_by_tag():
             if transaction.tag.name == tag.name:
                 transaction_list.append(transaction)
 
-    total_spent = 0
-    for transaction in transactions:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
 
@@ -107,10 +99,7 @@ def sort_by_time_reversed():
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     transactions_by_time.reverse()
 
-    total_spent = 0
-    for transaction in transactions:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions)
     
     
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
@@ -126,10 +115,8 @@ def filter_by_month(month_name):
         if str(month) == months[month_name]:
             transactions_by_month.append(transaction)
     
-    total_spent = 0
-    for transaction in transactions_by_month:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions_by_month)
+
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_month, total_spent = total_spent)
 
 @transactions_blueprint.route("/transactions/<merchant_name>/filter_merchant")
@@ -140,9 +127,6 @@ def filter_by_merchant(merchant_name):
         if transaction.merchant.name == merchant_name:
             transactions_by_merchant.append(transaction)
 
-    total_spent = 0
-    for transaction in transactions_by_merchant:
-        total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = calculator.total_spend(transactions_by_merchant)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent)
