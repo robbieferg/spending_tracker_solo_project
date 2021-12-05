@@ -130,3 +130,15 @@ def filter_by_merchant(merchant_name):
     total_spent = calculator.total_spend(transactions_by_merchant)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent)
+
+@transactions_blueprint.route("/transactions/<tag_name>/filter_tag")
+def filter_by_tag(tag_name):
+    transactions = transaction_repository.select_all()
+    transactions_by_tag = []
+    for transaction in transactions:
+        if transaction.tag.name == tag_name:
+            transactions_by_tag.append(transaction)
+
+    total_spent = calculator.total_spend(transactions_by_tag)
+
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_tag, total_spent = total_spent)

@@ -65,10 +65,18 @@
         {% for merchant  in merchants %}
             <a href="/transactions/{{ merchant.name }}/filter_merchant">{{ merchant.name }}</a>
         {% endfor %}
-            
-        
 </p>
-
+<p><b>View all transactions with a specific tag: </b>
+        {% set tags = [] %}
+        {% for transaction in transactions_all %}
+            {% if transaction.tag.name not in tags %}
+                {% set tags = tags.append(transaction.tag) %}
+            {% endif %}
+        {% endfor %}
+        {% for tag in tags %}
+            <a href="/transactions/{{ tag.name }}/filter_tag">{{ tag.name }}</a>
+        {% endfor %}
+</p>
     
 {% endblock content %}
 
