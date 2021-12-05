@@ -10,14 +10,24 @@
     <input type="text" id="amount_spent" name="amount_spent">
     <label for="merchant">Merchant:</label>
     <select name="merchant" id="merchant">
-        {% for merchant in valid_merchants %}
+        {% for merchant in merchants %}
+        {% if merchant.active == True %}
             <option value="{{ merchant.name }}">{{ merchant.name }}</option>
+        {% else %}
+            <option disabled="disabled" value="{{ merchant.name }}">{{ merchant.name }}(deactivated)</option>
+        {% endif %}
+            
         {% endfor %}
     </select>
     <label for="tag">Tag:</label>
     <select name="tag" id="tag">
-        {% for tag in valid_tags %}
+        {% for tag in tags %}
+        {% if tag.active == True %}
             <option value="{{ tag.name }}">{{ tag.name }}</option>
+        {% else %}
+            <option value="{{ tag.name }}" disabled=disabled>{{ tag.name }}(deactivated)</option>
+        {% endif %}
+            
         {% endfor %}
     </select>
     <button type="submit">Add</button>

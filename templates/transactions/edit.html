@@ -11,27 +11,32 @@
         <label for="merchant">Merchant:</label>
         <select name="merchant" id="merchant">
            
-        {% for merchant in valid_merchants %}
-        {% if  merchant.name == transaction.merchant.name %}
-            <option value="{{ merchant.name }}" selected>{{ merchant.name }}</option>
-        {% else %}
-            <option value="{{ merchant.name }}">{{ merchant.name }}</option>
-        {% endif %}
+        {% for merchant in merchants %}
+            {% if transaction.merchant.name == merchant.name and merchant.active == True %}
+                <option value="{{ merchant.name }}" selected>{{ merchant.name }}</option>
+            {% elif merchant.active == False %}
+                <option value="{{ merchant.name }}" disabled>{{ merchant.name }}(deactivated)</option>
+            {% else %}
+                <option value="{{ merchant.name }}">{{ merchant.name }}</option>
+            {% endif %}
             
         {% endfor %}
         
         </select>
         <label for="tag">Tag:</label>
         <select name="tag" id="tag" value="{{ transaction.tag.name }}">
-            {% for tag in valid_tags %}
-            {% if tag.name == transaction.tag.name %}
-                <option value="{{ tag.name }}" selected>{{ tag.name }}</option>
-            {% else %}
+        {% for tag in tags %}
+        {% if transaction.tag.name == tag.name and tag.active == True %}
+            <option value="{{ tag.name }}" selected>{{ tag.name }}</option>
+        {% elif tag.active == False %}
+            <option value="{{ tag.name }}" disabled>{{ tag.name }}(deactivated)</option>
+        {% else %}
             <option value="{{ tag.name }}">{{ tag.name }}</option>
-            {% endif %}
-                
-            {% endfor %}
+        {% endif %}
+            
+        {% endfor %}
         </select>
         <button type="submit">Update</button>
     </form>
 {% endblock content %}
+

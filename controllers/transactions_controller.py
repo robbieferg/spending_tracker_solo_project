@@ -22,15 +22,7 @@ def transactions():
 def add_transaction():
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
-    valid_merchants = []
-    for merchant in merchants:
-        if merchant.active == True:
-            valid_merchants.append(merchant)
-    valid_tags = []
-    for tag in tags:
-        if tag.active == True:
-            valid_tags.append(tag)
-    return render_template("transactions/add.html", valid_merchants = valid_merchants, valid_tags = valid_tags)
+    return render_template("transactions/add.html", merchants = merchants, tags = tags)
 
 @transactions_blueprint.route("/transactions/add", methods=['POST'])
 def new_transaction():
@@ -49,15 +41,7 @@ def edit_transaction(id):
     transaction = transaction_repository.select(id)
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
-    valid_merchants = []
-    for merchant in merchants:
-        if merchant.active == True:
-            valid_merchants.append(merchant)
-    valid_tags = []
-    for tag in tags:
-        if tag.active == True:
-            valid_tags.append(tag)
-    return render_template("transactions/edit.html", transaction = transaction, valid_merchants = valid_merchants, valid_tags = valid_tags)
+    return render_template("transactions/edit.html", transaction = transaction, merchants = merchants, tags = tags)
 
 @transactions_blueprint.route("/transactions/<id>/edit", methods=['POST'])
 def update_transaction(id):
