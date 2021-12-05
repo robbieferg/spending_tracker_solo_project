@@ -75,4 +75,28 @@ def sort_by_merchant():
             if transaction.merchant.name == merchant.name:
                 transaction_list.append(transaction)
 
-    return render_template("transactions/index.html", transactions = transaction_list)
+    total_spent = 0
+    for transaction in transactions:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(round(total_spent, 2))
+
+    return render_template("transactions/index.html", transactions = transaction_list, total_spent = total_spent)
+
+@transactions_blueprint.route("/transactions/sort_by_tag")
+def sort_by_tag():
+    transactions = transaction_repository.select_all()
+    transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
+    tags = tag_repository.select_all()
+    tags_sorted = sorted(tags, key=attrgetter('name'))
+    transaction_list = []
+    for tag in tags_sorted:
+        for transaction in transactions_by_time:
+            if transaction.tag.name == tag.name:
+                transaction_list.append(transaction)
+
+    total_spent = 0
+    for transaction in transactions:
+        total_spent += float(transaction.amount_spent)
+    total_spent = "{:,}".format(round(total_spent, 2))
+
+    return render_template("transactions/index.html", transactions = transaction_list, total_spent = total_spent)
