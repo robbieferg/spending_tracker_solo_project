@@ -15,11 +15,13 @@ transactions_blueprint = Blueprint("transactions", __name__)
 def transactions():
     transactions = transaction_repository.select_all()
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
+    selected_view = "this year"
     
     total_spent = calculator.total_spend(transactions)
+    month_spend = calculator.monthly_spend(transactions)
     
     
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
@@ -67,6 +69,7 @@ def sort_by_merchant():
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     merchants = merchant_repository.select_all()
     merchants_sorted = sorted(merchants, key=attrgetter('name'))
+    selected_view = "this year"
     transaction_list = []
     for merchant in merchants_sorted:
         for transaction in transactions_by_time:
@@ -74,8 +77,9 @@ def sort_by_merchant():
                 transaction_list.append(transaction)
 
     total_spent = calculator.total_spend(transactions)
+    month_spend = calculator.monthly_spend(transactions)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
 
 @transactions_blueprint.route("/transactions/sort_by_tag")
 def sort_by_tag():
@@ -83,6 +87,7 @@ def sort_by_tag():
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     tags = tag_repository.select_all()
     tags_sorted = sorted(tags, key=attrgetter('name'))
+    selected_view = "this year"
     transaction_list = []
     for tag in tags_sorted:
         for transaction in transactions_by_time:
@@ -90,23 +95,27 @@ def sort_by_tag():
                 transaction_list.append(transaction)
 
     total_spent = calculator.total_spend(transactions)
+    month_spend = calculator.monthly_spend(transactions)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
 
 @transactions_blueprint.route("/transactions/sort_by_date_time_reversed")
 def sort_by_time_reversed():
     transactions = transaction_repository.select_all()
+    selected_view = "this year"
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     transactions_by_time.reverse()
 
     total_spent = calculator.total_spend(transactions)
+    month_spend = calculator.monthly_spend(transactions)
     
     
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
 
 @transactions_blueprint.route("/transactions/<month_name>/filter_month")
 def filter_by_month(month_name):
     transactions = transaction_repository.select_all()
+    selected_view = f"during {month_name}"
     transactions_by_month = []
     months = {"January" : "1", "February" : "2", "March" : "3", "April" : "4", "May" : "5", "June" : "6", "July" : "7", "August" : "8", "September" : "9", "October" : "10", "November" : "11", "December" : "12"}
     for transaction in transactions:
@@ -117,11 +126,12 @@ def filter_by_month(month_name):
     
     total_spent = calculator.total_spend(transactions_by_month)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_month, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_month, total_spent = total_spent, selected_view = selected_view)
 
 @transactions_blueprint.route("/transactions/<merchant_name>/filter_merchant")
 def filter_by_merchant(merchant_name):
     transactions = transaction_repository.select_all()
+    selected_view = f"for {merchant_name}"
     transactions_by_merchant = []
     for transaction in transactions:
         if transaction.merchant.name == merchant_name:
@@ -129,11 +139,12 @@ def filter_by_merchant(merchant_name):
 
     total_spent = calculator.total_spend(transactions_by_merchant)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent, selected_view = selected_view)
 
 @transactions_blueprint.route("/transactions/<tag_name>/filter_tag")
 def filter_by_tag(tag_name):
     transactions = transaction_repository.select_all()
+    selected_view = f"on {tag_name}"
     transactions_by_tag = []
     for transaction in transactions:
         if transaction.tag.name == tag_name:
@@ -141,4 +152,4 @@ def filter_by_tag(tag_name):
 
     total_spent = calculator.total_spend(transactions_by_tag)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_tag, total_spent = total_spent)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_tag, total_spent = total_spent, selected_view = selected_view)

@@ -44,8 +44,14 @@
     {% endfor %}
 </table>
 <br>
-<b>Total Spent: </b>£{{ total_spent }}
+<b>Total Spent {{ selected_view }}: </b>£{{ total_spent }}
 <br>
+{% if selected_view == "this year" %}
+    <p><b>Total spent this month:</b> £{{ month_spend }}</p>
+{% endif %}
+    
+
+
 <br>
 <form action="/transactions/add"><button>Add New Transaction</button></form>
 <br>
