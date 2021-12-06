@@ -2,6 +2,7 @@
 DROP TABLE transactions;
 DROP TABLE merchants;
 DROP TABLE tags;
+DROP TABLE budgets;
 
 
 
@@ -26,4 +27,10 @@ CREATE TABLE transactions (
     merchant_id INT REFERENCES merchants(id) ON DELETE CASCADE,
     tag_id INT REFERENCES tags(id) ON DELETE CASCADE,
     timestamp VARCHAR(255)
+);
+
+CREATE TABLE budgets (
+    id SERIAL PRIMARY KEY,
+    budget_type VARCHAR(255),
+    budget_amount FLOAT
 );
