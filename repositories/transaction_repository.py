@@ -35,7 +35,7 @@ def select(id):
 
 def update(transaction, new_date, new_time, new_amount_spent, new_merchant, new_tag, new_timestamp):
     sql = "UPDATE transactions SET (date, time, amount_spent, merchant_id, tag_id, timestamp) = (%s, %s, %s, %s, %s, %s) WHERE id = %s"
-    values = (new_date, new_time, new_amount_spent, new_merchant, new_tag, transaction.id, new_timestamp)
+    values = [new_date, new_time, new_amount_spent, new_merchant, new_tag, new_timestamp, transaction.id,]
     run_sql(sql, values)
 
 def delete_all():

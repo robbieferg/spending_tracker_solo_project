@@ -65,22 +65,29 @@
         {% set merchants = [] %}
         {% for transaction in transactions_all %}
             {% if transaction.merchant.name not in merchants %}
-                {% set merchants = merchants.append(transaction.merchant) %}
+                {% set merchants = merchants.append(transaction.merchant.name) %}
+                
             {% endif %}
         {% endfor %}
-        {% for merchant  in merchants %}
-            <a href="/transactions/{{ merchant.name }}/filter_merchant">{{ merchant.name }}</a>
+
+        {% for merchant in merchants|sort %}
+            <a href="/transactions/{{ merchant }}/filter_merchant">{{ merchant }}</a>
         {% endfor %}
+        
+               
+            
+        
+        
 </p>
 <p><b>View all transactions with a specific tag: </b>
         {% set tags = [] %}
         {% for transaction in transactions_all %}
             {% if transaction.tag.name not in tags %}
-                {% set tags = tags.append(transaction.tag) %}
+                {% set tags = tags.append(transaction.tag.name) %}
             {% endif %}
         {% endfor %}
-        {% for tag in tags %}
-            <a href="/transactions/{{ tag.name }}/filter_tag">{{ tag.name }}</a>
+        {% for tag in tags|sort %}
+            <a href="/transactions/{{ tag }}/filter_tag">{{ tag }}</a>
         {% endfor %}
 </p>
     
