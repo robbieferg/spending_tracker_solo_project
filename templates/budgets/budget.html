@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>My Budget</h1>
-    <p><b>Your current monthly budget is: £{{ budget }}</b></p>
+    <p><b>Your current monthly budget is:</b> £{{ budget.budget_amount }}</p> 
     <br>
     <p>You can update your monthly budget using the form below:</p>
     <br>
     <h3>Update Monthly Budget:</h3>
-    <form action="/budgets/" method="post">
+    <form action="/budgets" method="post">
         <label for="monthly_budget">Budget Amount (£)</label>
-        <input type="text" id="monthly_budget" name="monthly_budget" value="{{ budget.budget_amount }}" >
+        <input type="text" id="monthly_budget" name="monthly_budget" value="{{ budget.budget_amount }}">
         <button type="submit">Update</button>
     </form>
 {% endblock content %}

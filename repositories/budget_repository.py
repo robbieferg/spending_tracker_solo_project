@@ -14,7 +14,7 @@ def select_all():
     results = run_sql(sql)
     for row in results:
         budget = Budget(row['budget_type'], row['budget_amount'], row['id'])
-        budgets.append(tag)
+        budgets.append(budget)
     return budgets
 
 def update(budget, new_budget_type, new_budget_amount):
