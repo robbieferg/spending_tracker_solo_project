@@ -48,6 +48,19 @@
 <br>
 {% if selected_view == "this year" %}
     <p><b>Total spent this month:</b> £{{ month_spend }}</p>
+    <p><b>Your monthly budget:</b> £{{ monthly_budget }}</p>
+    {% if month_spend > monthly_budget %}
+        <p><b>ALERT!</b>You have exceeded your monthly budget!</p>
+    {% endif %}
+    {% if (month_spend > (monthly_budget - 10)) and (month_spend <= monthly_budget) %}
+        <p><b>WARNING!</b>You are very close to exceeding your monthly budget!</p>
+    {% endif %}
+    {% if (month_spend > (monthly_budget - 25)) and (month_spend <= (monthly_budget - 10)) %}
+        <p><b>Watch out!</b>You are getting close to exceeding your monthly budget!</p>
+    {% endif %}
+    {% if (month_spend > (monthly_budget - 50)) and (month_spend <= (monthly_budget - 25)) %}
+        <p><b>Just a heads up!</b> You might want to limit your spending to keep safe from crossing your monthly limit.</p>
+    {% endif %}
 {% endif %}
     
 

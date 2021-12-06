@@ -17,6 +17,16 @@ def select_all():
         budgets.append(budget)
     return budgets
 
+def select(budget_type):
+    budget = None
+    sql = "SELECT * FROM budgets WHERE budget_type = %s"
+    values = [budget_type]
+    result = run_sql(sql, values)[0]
+
+    if result is not None:
+        budget = Budget(result['budget_type'], result['budget_amount'], result['id'])
+    return budget
+
 def update(budget, new_budget_type, new_budget_amount):
     sql = "UPDATE budgets SET (budget_type, budget_amount) = (%s, %s) WHERE id = %s"
     values = [new_budget_type, new_budget_amount, budget.id]

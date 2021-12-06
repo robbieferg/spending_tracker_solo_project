@@ -5,6 +5,7 @@ from models.transaction import Transaction
 import repositories.transaction_repository as transaction_repository
 import repositories.merchant_repository as merchant_repository
 import repositories.tag_repository as tag_repository
+import repositories.budget_repository as budget_repository
 from datetime import datetime
 from operator import attrgetter
 import models.total_spend_calculator as calculator
@@ -16,12 +17,13 @@ def transactions():
     transactions = transaction_repository.select_all()
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     selected_view = "this year"
+    monthly_budget = budget_repository.select("monthly").budget_amount
     
     total_spent = calculator.total_spend(transactions)
     month_spend = calculator.monthly_spend(transactions)
     
     
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
 @transactions_blueprint.route("/transactions/add")
 def add_transaction():
@@ -74,6 +76,7 @@ def sort_by_merchant():
     merchants = merchant_repository.select_all()
     merchants_sorted = sorted(merchants, key=attrgetter('name'))
     selected_view = "this year"
+    monthly_budget = budget_repository.select("monthly").budget_amount
     transaction_list = []
     for merchant in merchants_sorted:
         for transaction in transactions_by_time:
@@ -83,7 +86,7 @@ def sort_by_merchant():
     total_spent = calculator.total_spend(transactions)
     month_spend = calculator.monthly_spend(transactions)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
 @transactions_blueprint.route("/transactions/sort_by_tag")
 def sort_by_tag():
@@ -92,6 +95,7 @@ def sort_by_tag():
     tags = tag_repository.select_all()
     tags_sorted = sorted(tags, key=attrgetter('name'))
     selected_view = "this year"
+    monthly_budget = budget_repository.select("monthly").budget_amount
     transaction_list = []
     for tag in tags_sorted:
         for transaction in transactions_by_time:
@@ -101,12 +105,13 @@ def sort_by_tag():
     total_spent = calculator.total_spend(transactions)
     month_spend = calculator.monthly_spend(transactions)
 
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
 @transactions_blueprint.route("/transactions/sort_by_date_time_reversed")
 def sort_by_time_reversed():
     transactions = transaction_repository.select_all()
     selected_view = "this year"
+    monthly_budget = budget_repository.select("monthly").budget_amount
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     transactions_by_time.reverse()
 
@@ -114,7 +119,7 @@ def sort_by_time_reversed():
     month_spend = calculator.monthly_spend(transactions)
     
     
-    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend)
+    return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
 @transactions_blueprint.route("/transactions/<month_name>/filter_month")
 def filter_by_month(month_name):

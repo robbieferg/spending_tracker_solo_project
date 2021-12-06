@@ -4,7 +4,7 @@ def total_spend(selected_transactions):
     total_spent = 0
     for transaction in selected_transactions:
         total_spent += float(transaction.amount_spent)
-    total_spent = "{:,}".format(round(total_spent, 2))
+    total_spent = round(total_spent, 2)
     return total_spent
 
 def monthly_spend(selected_transactions):
@@ -14,5 +14,5 @@ def monthly_spend(selected_transactions):
     for transaction in selected_transactions:
         if transaction.timestamp.month == current_month:
             monthly_spend += float(transaction.amount_spent)
-    monthly_spend = "{:,}".format(round(monthly_spend, 2))
+    monthly_spend = round(monthly_spend, 2)
     return monthly_spend
