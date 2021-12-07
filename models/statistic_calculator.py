@@ -8,6 +8,7 @@ import repositories.transaction_repository as transaction_repository
 
 from datetime import datetime
 
+
 def get_total_spend(selected_transactions):
     total_spent = 0
     for transaction in selected_transactions:
@@ -110,3 +111,33 @@ def get_min_spend_month():
 
     least_expensive_month = all_months[min_index]
     return least_expensive_month
+
+def get_most_popular_merchant():
+    all_merchants = merchant_repository.select_all()
+    merchant_totals = []
+    for merchant in all_merchants:
+        merchant_transactions = get_transactions_by_merchant(merchant)
+        merchant_spend = get_total_spend(merchant_transactions)
+        merchant_totals.append(merchant_spend)
+
+    max_spend = max(merchant_totals)
+    max_index = merchant_totals.index(max_spend)
+
+    most_popular_merchant = all_merchants[max_index].name
+    return most_popular_merchant
+
+def get_most_popular_tag():
+    all_tags = tag_repository.select_all()
+    tag_totals = []
+    for tag in all_tags:
+        tag_transactions = get_transactions_by_tag(tag)
+        tag_spend = get_total_spend(tag_transactions)
+        tag_totals.append(tag_spend)
+
+    max_spend = max(tag_totals)
+    max_index = tag_totals.index(max_spend)
+
+    most_popular_tag = all_tags[max_index].name
+    return most_popular_tag
+
+
