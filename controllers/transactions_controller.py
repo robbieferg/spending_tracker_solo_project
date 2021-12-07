@@ -8,7 +8,7 @@ import repositories.tag_repository as tag_repository
 import repositories.budget_repository as budget_repository
 from datetime import datetime
 from operator import attrgetter
-import models.total_spend_calculator as calculator
+import models.statistic_calculator as calculator
 
 from decimal import Decimal
 

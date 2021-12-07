@@ -10,15 +10,7 @@ import repositories.transaction_repository as transaction_repository
 from datetime import datetime
 import random
 
-def generate_random_stat():
-    stats_list = []
 
-    months_passed_this_year = datetime.now().month
-    all_transactions = transaction_repository.select_all()
-    total_year_spend = calculator.total_spend(all_transactions)
-    monthly_average = round((total_year_spend / months_passed_this_year), 2)
-    monthly_average_string = f"Your monthly average spending for this year so far is £{monthly_average}"
-    stats_list.append(monthly_average_string)
 
     current_datetime = datetime.today()
     weeks_passed_in_year = float(current_datetime.strftime("%V"))
