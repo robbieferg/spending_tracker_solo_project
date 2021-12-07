@@ -66,6 +66,12 @@ def show_statistics():
     expensive_month_string = f"Your most expensive month this year was {most_expensive_month}, when you spent a total of £{cost_of_month}"
     stat_choices.append(expensive_month_string)
 
+    least_expensive_month = calculator.get_min_spend_month()
+    transactions_min_month = calculator.get_transactions_by_month(least_expensive_month)
+    cost_min_month = round(Decimal(calculator.get_total_spend(transactions_min_month)), 2)
+    least_expensive_month_string = f"Your least expensive month this year was {least_expensive_month}, when you spent £{cost_min_month}"
+    stat_choices.append(least_expensive_month_string)
+
 
 
     stat_selected = random.choice(stat_choices)

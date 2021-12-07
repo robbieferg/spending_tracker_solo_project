@@ -78,8 +78,10 @@ def get_transactions_by_tag(tag_name):
             transactions_by_tag.append(transaction)
     return transactions_by_tag
 
+all_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 def get_all_monthly_totals():
-    all_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+   
     months_passed = datetime.now().month
     spent_each_month = []
 
@@ -94,10 +96,17 @@ def get_all_monthly_totals():
     
     
 def get_max_spend_month():
-    all_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     all_month_totals = get_all_monthly_totals()
     max_spend = max(all_month_totals)
     max_index = all_month_totals.index(max_spend)
 
     most_expensive_month = all_months[max_index]
     return most_expensive_month
+
+def get_min_spend_month():
+    all_month_totals = get_all_monthly_totals()
+    min_spend = min(all_month_totals)
+    min_index = all_month_totals.index(min_spend)
+
+    least_expensive_month = all_months[min_index]
+    return least_expensive_month
