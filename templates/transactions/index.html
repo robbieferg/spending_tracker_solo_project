@@ -6,7 +6,7 @@
 </div>
 
 <h3>Sort by:</h3>
-<p><a href="/transactions">Date & Time (Old to New)</a>  <a href="/transactions/sort_by_date_time_reversed">Date & Time (New to Old)</a>  <a href="/transactions/sort_by_merchant">Merchant</a> <a href="/transactions/sort_by_tag">Tag</a></p>  
+<p><a href="/transactions">Date & Time (Old to New)</a> | <a href="/transactions/sort_by_date_time_reversed">Date & Time (New to Old)</a> | <a href="/transactions/sort_by_merchant">Merchant</a> | <a href="/transactions/sort_by_tag">Tag</a></p>  
 
 
 <table>
@@ -54,7 +54,8 @@
 {% if selected_view == "this year" %}
     <p><b>Total spent this month:</b> £{{ month_spend }}</p>
     <p><b>Your monthly budget:</b> £{{ monthly_budget }}</p>
-    <form action="/transactions/add"><button>Add New Transaction</button></form>
+    <a href="/transactions/add" id="add_transaction">Add New Transaction</a>
+    <hr>
     {% if month_spend > monthly_budget %}
         <div id="warning_red"><p><b>ALERT!</b> You have exceeded your monthly budget!</p></div>
     {% endif %}

@@ -56,3 +56,12 @@ nav > li {
 #tag_filter {
     text-align: center;
 }
+
+#add_transaction {
+    padding: 10px;
+}
+
+.inline {
+    display:inline-block;
+    margin-right: 5px;
+}
