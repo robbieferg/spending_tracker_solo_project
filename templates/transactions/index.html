@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>My Transactions</h2>
-<p>Welcome! Below is a list of all your recent transactions.</p>
+<h2>Your Transactions</h2>
+<div id="welcome_text"><p>Welcome! Below is a list of all your recent transactions.</p>
 <p>You can select a transaction to edit it or press the button below to add a new transaction.</p>
+</div>
 
 <h3>Sort by:</h3>
 <p><a href="/transactions">Date & Time (Old to New)</a>  <a href="/transactions/sort_by_date_time_reversed">Date & Time (New to Old)</a>  <a href="/transactions/sort_by_merchant">Merchant</a> <a href="/transactions/sort_by_tag">Tag</a></p>  
@@ -43,38 +44,41 @@
         
     {% endfor %}
 </table>
+<hr>
 <br>
 <b>Total Spent {{ selected_view }}: </b>£{{ total_spent }}
 <br>
+
+<br>
+
 {% if selected_view == "this year" %}
     <p><b>Total spent this month:</b> £{{ month_spend }}</p>
     <p><b>Your monthly budget:</b> £{{ monthly_budget }}</p>
+    <form action="/transactions/add"><button>Add New Transaction</button></form>
     {% if month_spend > monthly_budget %}
-        <p><b>ALERT!</b>You have exceeded your monthly budget!</p>
+        <div id="warning_red"><p><b>ALERT!</b> You have exceeded your monthly budget!</p></div>
     {% endif %}
     {% if (month_spend > (monthly_budget - 10)) and (month_spend <= monthly_budget) %}
-        <p><b>WARNING!</b>You are very close to exceeding your monthly budget!</p>
+        <div id="warning_orange"><p><b>WARNING!</b> You are very close to exceeding your monthly budget!</p></div>
     {% endif %}
     {% if (month_spend > (monthly_budget - 25)) and (month_spend <= (monthly_budget - 10)) %}
-        <p><b>Watch out!</b>You are getting close to exceeding your monthly budget!</p>
+        <div id="warning_yellow"><p><b>Watch out!</b> You are getting close to exceeding your monthly budget!</p></div>
     {% endif %}
     {% if (month_spend > (monthly_budget - 50)) and (month_spend <= (monthly_budget - 25)) %}
-        <p><b>Just a heads up!</b> You might want to limit your spending to keep safe from crossing your monthly limit.</p>
+        <div id="warning_green"><p><b>Heads up!</b> You might want to limit your spending to make sure you don't exceed your monthly budget.</p></div
     {% endif %}
 {% endif %}
+
     
-
-
-<br>
-<form action="/transactions/add"><button>Add New Transaction</button></form>
-<br>
-<p><b>View all transactions from a specific month: </b>
+<hr>
+<p id="month_filter"><b>View all transactions by month: </b><br>
         {% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
         {% for month in months %}
             <a href="/transactions/{{ month }}/filter_month">{{ month }}</a>
         {% endfor %}
     </p>
-<p><b>View all transactions by merchant: </b>
+    
+<p id="merchant_filter"><b>View all transactions by merchant: </b><br>
         {% set merchants = [] %}
         {% for transaction in transactions_all %}
             {% if transaction.merchant.name not in merchants %}
@@ -86,13 +90,9 @@
         {% for merchant in merchants|sort %}
             <a href="/transactions/{{ merchant }}/filter_merchant">{{ merchant }}</a>
         {% endfor %}
+    </p>
         
-               
-            
-        
-        
-</p>
-<p><b>View all transactions with a specific tag: </b>
+<p id="tag_filter"><b>View all transactions by tag: </b><br>
         {% set tags = [] %}
         {% for transaction in transactions_all %}
             {% if transaction.tag.name not in tags %}
@@ -102,7 +102,8 @@
         {% for tag in tags|sort %}
             <a href="/transactions/{{ tag }}/filter_tag">{{ tag }}</a>
         {% endfor %}
-</p>
+    </p>
+
     
 {% endblock content %}
 

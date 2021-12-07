@@ -3,7 +3,7 @@
     <h2>Edit Transaction:</h2>
     <form action="/transactions/{{ transaction.id }}/edit" method="post">
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date">
+        <input type="date" id="date" name="date" value={{ date_string }}>
         <label for="time">Time:</label>
         <input type="time" id="time" name="time" value="{{ transaction.time }}">
         <label for="amount_spent">Amount Spent (£):</label>

@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device=width, initial-sacle=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <title>{{ title }}</title>
     </head>
     <body>
-        <h1>SpendTracker.com</h1>
+        <h1 id="logo">CashTracker.com</h1>
         <nav>
             <ul>
                 <li><a href="/transactions">My Transactions</a></li>
@@ -19,4 +20,8 @@
             
         {% endblock content %}
     </body>
+    <hr>
+    <footer>
+        ©CashTracker Industries 2021
+    </footer>
 </html>

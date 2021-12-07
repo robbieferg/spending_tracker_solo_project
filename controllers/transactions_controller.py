@@ -10,6 +10,8 @@ from datetime import datetime
 from operator import attrgetter
 import models.total_spend_calculator as calculator
 
+from decimal import Decimal
+
 transactions_blueprint = Blueprint("transactions", __name__)
 
 @transactions_blueprint.route("/transactions")
@@ -17,10 +19,13 @@ def transactions():
     transactions = transaction_repository.select_all()
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     selected_view = "this year"
-    monthly_budget = budget_repository.select("monthly").budget_amount
+    monthly_budget = Decimal(budget_repository.select("monthly").budget_amount)
+    monthly_budget = round(monthly_budget, 2)
     
-    total_spent = calculator.total_spend(transactions)
-    month_spend = calculator.monthly_spend(transactions)
+    total_spent = Decimal(calculator.total_spend(transactions))
+    total_spent = round(total_spent, 2)
+    month_spend = Decimal(calculator.monthly_spend(transactions))
+    month_spend = round(month_spend, 2)
     
     
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
@@ -48,7 +53,8 @@ def edit_transaction(id):
     transaction = transaction_repository.select(id)
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
-    return render_template("transactions/edit.html", transaction = transaction, merchants = merchants, tags = tags)
+    date_string = datetime.strptime(transaction.date, "%d/%m/%Y").strftime("%Y-%m-%d")
+    return render_template("transactions/edit.html", transaction = transaction, merchants = merchants, tags = tags, date_string = date_string)
 
 @transactions_blueprint.route("/transactions/<id>/edit", methods=['POST'])
 def update_transaction(id):
