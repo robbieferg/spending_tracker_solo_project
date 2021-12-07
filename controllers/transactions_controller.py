@@ -22,9 +22,9 @@ def transactions():
     monthly_budget = Decimal(budget_repository.select("monthly").budget_amount)
     monthly_budget = round(monthly_budget, 2)
     
-    total_spent = Decimal(calculator.total_spend(transactions))
+    total_spent = Decimal(calculator.get_total_spend(transactions))
     total_spent = round(total_spent, 2)
-    month_spend = Decimal(calculator.monthly_spend(transactions))
+    month_spend = Decimal(calculator.get_monthly_spend(transactions))
     month_spend = round(month_spend, 2)
     
     
@@ -89,8 +89,8 @@ def sort_by_merchant():
             if transaction.merchant.name == merchant.name:
                 transaction_list.append(transaction)
 
-    total_spent = calculator.total_spend(transactions)
-    month_spend = calculator.monthly_spend(transactions)
+    total_spent = calculator.get_total_spend(transactions)
+    month_spend = calculator.get_monthly_spend(transactions)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
@@ -108,8 +108,8 @@ def sort_by_tag():
             if transaction.tag.name == tag.name:
                 transaction_list.append(transaction)
 
-    total_spent = calculator.total_spend(transactions)
-    month_spend = calculator.monthly_spend(transactions)
+    total_spent = calculator.get_total_spend(transactions)
+    month_spend = calculator.get_monthly_spend(transactions)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transaction_list, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
 
@@ -121,8 +121,8 @@ def sort_by_time_reversed():
     transactions_by_time = sorted(transactions, key=attrgetter('timestamp'))
     transactions_by_time.reverse()
 
-    total_spent = calculator.total_spend(transactions)
-    month_spend = calculator.monthly_spend(transactions)
+    total_spent = calculator.get_total_spend(transactions)
+    month_spend = calculator.get_monthly_spend(transactions)
     
     
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_time, total_spent = total_spent, selected_view = selected_view, month_spend = month_spend, monthly_budget = monthly_budget)
@@ -131,15 +131,9 @@ def sort_by_time_reversed():
 def filter_by_month(month_name):
     transactions = transaction_repository.select_all()
     selected_view = f"during {month_name}"
-    transactions_by_month = []
-    months = {"January" : "1", "February" : "2", "March" : "3", "April" : "4", "May" : "5", "June" : "6", "July" : "7", "August" : "8", "September" : "9", "October" : "10", "November" : "11", "December" : "12"}
-    for transaction in transactions:
-        month = transaction.timestamp.month
-        
-        if str(month) == months[month_name]:
-            transactions_by_month.append(transaction)
+    transactions_by_month = calculator.get_transactions_by_month(month_name)
     
-    total_spent = calculator.total_spend(transactions_by_month)
+    total_spent = round(Decimal(calculator.get_total_spend(transactions_by_month)), 2)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_month, total_spent = total_spent, selected_view = selected_view)
 
@@ -147,12 +141,9 @@ def filter_by_month(month_name):
 def filter_by_merchant(merchant_name):
     transactions = transaction_repository.select_all()
     selected_view = f"for {merchant_name}"
-    transactions_by_merchant = []
-    for transaction in transactions:
-        if transaction.merchant.name == merchant_name:
-            transactions_by_merchant.append(transaction)
+    transactions_by_merchant = calculator.get_transactions_by_merchant(merchant_name)
 
-    total_spent = calculator.total_spend(transactions_by_merchant)
+    total_spent = round(Decimal(calculator.get_total_spend(transactions_by_merchant)), 2)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_merchant, total_spent = total_spent, selected_view = selected_view)
 
@@ -160,11 +151,8 @@ def filter_by_merchant(merchant_name):
 def filter_by_tag(tag_name):
     transactions = transaction_repository.select_all()
     selected_view = f"on {tag_name}"
-    transactions_by_tag = []
-    for transaction in transactions:
-        if transaction.tag.name == tag_name:
-            transactions_by_tag.append(transaction)
+    transactions_by_tag = calculator.get_transactions_by_tag(tag_name)
 
-    total_spent = calculator.total_spend(transactions_by_tag)
+    total_spent = round(Decimal(calculator.get_total_spend(transactions_by_tag)), 2)
 
     return render_template("transactions/index.html", transactions_all = transactions, transactions_selected = transactions_by_tag, total_spent = total_spent, selected_view = selected_view)
