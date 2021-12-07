@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 
-from controllers.transactions_controller import transactions_blueprint
+from controllers.transactions_controller import transactions, transactions_blueprint
 from controllers.merchants_controller import merchants_blueprint
 from controllers.tags_controller import tags_blueprint
 from controllers.budgets_controller import budgets_blueprint
@@ -16,7 +16,7 @@ app.register_blueprint(random_stats_blueprint)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return redirect("/transactions")
 
 if __name__ == '__main__':
     app.run(debug=True)
