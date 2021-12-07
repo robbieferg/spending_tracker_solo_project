@@ -56,7 +56,7 @@
 {% if selected_view == "this year" %}
     <p><b>Total spent this month:</b> £{{ month_spend }}</p>
     <p><b>Your monthly budget:</b> £{{ monthly_budget }}</p>
-    <a href="/transactions/add" id="add_transaction">Add New Transaction</a>
+    <p><a href="/transactions/add" id="add_transaction">Add New Transaction</a></p>
     <hr>
     {% if month_spend > monthly_budget %}
         <div id="warning_red"><p><b>ALERT!</b> You have exceeded your monthly budget!</p></div>
