@@ -2,13 +2,14 @@ from flask import Flask, render_template, request, redirect
 from flask import Blueprint
 from models.budget import Budget
 import repositories.budget_repository as budget_repository
+from decimal import Decimal
 
 budgets_blueprint = Blueprint("budgets", __name__)
 
 @budgets_blueprint.route("/budgets")
 def budgets():
     budgets = budget_repository.select_all()
-    monthly_budget = budgets[0]
+    monthly_budget = round(Decimal(budgets[0].budget_amount), 2)
     return render_template("budgets/budget.html", budget = monthly_budget)
 
 @budgets_blueprint.route("/budgets", methods=['POST'])
