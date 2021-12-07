@@ -26,6 +26,11 @@ def generate_random_stat():
     weekly_average_string = f"Your weekly average spending for this year so far is £{weekly_average}"
     stats_list.append(weekly_average_string)
 
+    days_passed_in_year = datetime.now().timetuple().tm_yday
+    daily_average = round((total_year_spend / days_passed_in_year), 2)
+    daily_average_string = f"Your daily average spending for this year so far is £{daily_average}"
+    stats_list.append(daily_average_string)
+
     all_tags = tag_repository.select_all()
     random_tag = random.choice(all_tags)
     random_tag_total_spend = 0

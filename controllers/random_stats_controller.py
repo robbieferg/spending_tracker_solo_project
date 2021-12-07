@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template
 from flask import Blueprint
 
 from models import random_stat_generator
