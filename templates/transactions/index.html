@@ -7,7 +7,7 @@
 
 <h3>Sort by:</h3>
 <p><a href="/transactions">Date & Time (Old to New)</a> | <a href="/transactions/sort_by_date_time_reversed">Date & Time (New to Old)</a> | <a href="/transactions/sort_by_merchant">Merchant</a> | <a href="/transactions/sort_by_tag">Tag</a></p>  
-
+<hr>
 
 <table>
     <tr>
@@ -35,9 +35,8 @@
         <td>|</td>
         <td>£{{ transaction.amount_spent }}</td>
         <td>|</td>
-        <td></td>
-        <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit Transaction</button></form></td> 
-        <td><form class="delete-form" action="/transactions/{{ transaction.id }}/delete"> <button>Delete Transaction</button></form></td> 
+        <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit</button></form></td>
+        <td><form action="/transactions/{{ transaction.id }}/delete"> <button>Delete </button></form></td> 
 
     </tr>
     
@@ -45,6 +44,9 @@
     {% endfor %}
 </table>
 <hr>
+{% set total_spent = "{:,}".format(total_spent) %}
+
+
 <br>
 <b>Total Spent {{ selected_view }}: </b>£{{ total_spent }}
 <br>
