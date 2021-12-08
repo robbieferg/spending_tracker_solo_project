@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask import Blueprint
 from models.tag import Tag
 import repositories.tag_repository as tag_repository
+import models.random_stat_generator as generator
 
 tags_blueprint = Blueprint("tags", __name__)
 
@@ -25,11 +26,13 @@ def delete_tag(id):
 @tags_blueprint.route("/tags/<id>/edit")
 def edit_tag(id):
     tag = tag_repository.select(id)
-    return render_template("tags/edit.html", tag = tag)
+    stat = generator.get_random_stat()
+    return render_template("tags/edit.html", tag = tag, stat = stat)
 
 @tags_blueprint.route("/tags/add")
 def add_tag():
-    return render_template("tags/add.html")
+    stat = generator.get_random_stat()
+    return render_template("tags/add.html", stat = stat)
 
 @tags_blueprint.route("/tags/add", methods=['POST'])
 def new_tag():

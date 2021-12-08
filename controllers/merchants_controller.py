@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask import Blueprint
 from models.merchant import Merchant
 import repositories.merchant_repository as merchant_repository
+import models.random_stat_generator as generator
 
 merchants_blueprint = Blueprint("merchants", __name__)
 
@@ -24,7 +25,8 @@ def delete_merchant(id):
 
 @merchants_blueprint.route("/merchants/add")
 def add_merchant():
-    return render_template("merchants/add.html")
+    stat = generator.get_random_stat()
+    return render_template("merchants/add.html", stat = stat)
 
 @merchants_blueprint.route("/merchants/add", methods=['POST'])
 def new_merchant():
@@ -35,7 +37,8 @@ def new_merchant():
 @merchants_blueprint.route("/merchants/<id>/edit")
 def edit_merchant(id):
     merchant = merchant_repository.select(id)
-    return render_template("merchants/edit.html", merchant = merchant)
+    stat = generator.get_random_stat()
+    return render_template("merchants/edit.html", merchant = merchant, stat = stat)
 
 @merchants_blueprint.route("/merchants/<id>/edit", methods=['POST'])
 def update_merchant(id):

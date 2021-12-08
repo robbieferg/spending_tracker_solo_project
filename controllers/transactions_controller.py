@@ -9,6 +9,7 @@ import repositories.budget_repository as budget_repository
 from datetime import datetime
 from operator import attrgetter
 import models.statistic_calculator as calculator
+import models.random_stat_generator as generator
 
 from decimal import Decimal
 
@@ -34,7 +35,8 @@ def transactions():
 def add_transaction():
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
-    return render_template("transactions/add.html", merchants = merchants, tags = tags)
+    stat = generator.get_random_stat()
+    return render_template("transactions/add.html", merchants = merchants, tags = tags, stat = stat)
 
 @transactions_blueprint.route("/transactions/add", methods=['POST'])
 def new_transaction():
@@ -54,7 +56,8 @@ def edit_transaction(id):
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
     date_string = datetime.strptime(transaction.date, "%d/%m/%Y").strftime("%Y-%m-%d")
-    return render_template("transactions/edit.html", transaction = transaction, merchants = merchants, tags = tags, date_string = date_string)
+    stat = generator.get_random_stat()
+    return render_template("transactions/edit.html", transaction = transaction, merchants = merchants, tags = tags, date_string = date_string, stat = stat)
 
 @transactions_blueprint.route("/transactions/<id>/edit", methods=['POST'])
 def update_transaction(id):
