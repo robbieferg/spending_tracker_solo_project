@@ -4,7 +4,7 @@
 <h3>Active Tags:</h3>
 <ul>
     {% for tag in active_tags %}
-        <b>Name: </b>{{ tag.name }} <form action="/tags/{{ tag.id }}/deactivate" class="inline"> <button>Deactivate</button></form> 
+        <b>{{ tag.name }}</b> <form action="/tags/{{ tag.id }}/deactivate" class="inline"> <button>Deactivate</button></form> 
         <form action="/tags/{{ tag.id }}/edit" class="inline"><button>Edit</button></form>
         <hr>
     {% endfor %}

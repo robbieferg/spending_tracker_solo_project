@@ -10,7 +10,7 @@
 <hr>
 
 <table>
-    <tr>
+    <tr tr style="border-bottom:1px solid black">
         <th>Date</th>
         <th></th>
         <th>Time</th>
@@ -26,15 +26,15 @@
     {% for transaction in transactions_selected %}
     <tr>
         <td>{{ transaction.date }}</td>
-        <td>|</td>
+        <td></td>
         <td>{{ transaction.time }}</td>
-        <td>|</td>
+        <td></td>
         <td>{{ transaction.merchant.name }}</td>
-        <td>|</td>
+        <td></td>
         <td>{{ transaction.tag.name }}</td>
-        <td>|</td>
+        <td></td>
         <td>£{{ transaction.amount_spent }}</td>
-        <td>|</td>
+        <td></td>
         <td><form action="/transactions/{{ transaction.id }}/edit"><button>Edit</button></form></td>
         <td><form action="/transactions/{{ transaction.id }}/delete"> <button>Delete </button></form></td> 
 

@@ -4,7 +4,7 @@
     <h3>Active Merchants:</h3>
     <ul>
         {% for merchant in active_merchants %}
-            <b>Name: </b>{{ merchant.name }}</a> | <b>Description: </b> {{ merchant.description }} 
+            <div id="merchant_box"><b>{{ merchant.name }}</b> - <i>{{ merchant.description }}</i> </div>
             <form action="/merchants/{{ merchant.id }}/edit" class="inline"><button>Edit</button></form>
             <form action="/merchants/{{ merchant.id }}/deactivate" class="inline"><button>Deactivate</button></form>
             <hr>
@@ -17,7 +17,7 @@
         <b>Name: </b>{{ merchant.name }}</a> | <b>Description: </b> {{ merchant.description }}
         <form action="/merchants/{{ merchant.id }}/reactivate" class="inline"><button>Reactivate</button></form>
         <form action="/merchants/{{ merchant.id }}/delete" method='post' class="inline"><button class="delete-button">Delete</button></form>
-        <hr>
+        hr
         {% endfor %}
     </ul>
     <hr>

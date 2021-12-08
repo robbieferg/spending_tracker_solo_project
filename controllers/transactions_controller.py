@@ -153,8 +153,9 @@ def filter_by_merchant(merchant_name):
 @transactions_blueprint.route("/transactions/<tag_name>/filter_tag")
 def filter_by_tag(tag_name):
     transactions = transaction_repository.select_all()
+    tag = tag_repository.select_by_name(tag_name)
     selected_view = f"on {tag_name}"
-    transactions_by_tag = calculator.get_transactions_by_tag(tag_name)
+    transactions_by_tag = calculator.get_transactions_by_tag(tag)
 
     total_spent = round(Decimal(calculator.get_total_spend(transactions_by_tag)), 2)
 
