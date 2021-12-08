@@ -1,5 +1,9 @@
 # spending_tracker_solo_project
 
+RUNNING INSTRUCTIONS:
+
+This repository can be cloned and opened as a web application using Flask. Command "flask run" in the terminal within the repo directory will activate the local host link, which can be entered into a web browser to display the applications main index page. Basic instructions for using the application are included within the application pages.
+
 BRIEF
 
 The brief for this project was as follows:
