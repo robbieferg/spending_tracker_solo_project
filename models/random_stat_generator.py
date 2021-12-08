@@ -26,7 +26,7 @@ def get_weekly_average_stat():
     return average_week_string
 
 def get_daily_average_stat():
-    average_per_day = calculator.get_daily_average_current_year()
+    average_per_day = round(Decimal(calculator.get_daily_average_current_year()), 2)
     average_day_string = f"Your average daily expenditure this year is £{average_per_day}"
     return average_day_string
 
@@ -79,12 +79,12 @@ def get_most_popular_tag_stat():
     most_popular_tag = calculator.get_most_popular_tag()
     popular_tag_transactions = calculator.get_transactions_by_tag(most_popular_tag)
     popular_tag_total = calculator.get_total_spend(popular_tag_transactions)
-    most_popular_tag_string = f"Your favourite tag is {most_popular_tag}. You have spent £{popular_tag_total} on transactions with this tag."
+    most_popular_tag_string = f"Your favourite tag is {most_popular_tag.name}. You have spent £{popular_tag_total} on transactions with this tag."
     return most_popular_tag_string
 
 
 def get_random_stat():
-    all_functions = [get_average_spend_per_month_stat, get_weekly_average_stat, get_daily_average_stat, get_total_for_merchant_stat, get_total_for_tag_stat, get_most_expensive_month_stat, get_least_expensive_month_stat]
+    all_functions = [get_total_spend_current_year_stat, get_average_spend_per_month_stat, get_weekly_average_stat, get_daily_average_stat, get_total_for_merchant_stat, get_total_for_tag_stat, get_most_expensive_month_stat, get_least_expensive_month_stat, get_most_popular_tag_stat]
     stat_selected = random.choice(all_functions)()
     return stat_selected
 

@@ -71,11 +71,11 @@ def get_transactions_by_merchant(merchant_name):
 
     return transactions_by_merchant
 
-def get_transactions_by_tag(tag_name):
+def get_transactions_by_tag(tag):
     transactions_all = transaction_repository.select_all()
     transactions_by_tag = []
     for transaction in transactions_all:
-        if transaction.tag.name == tag_name:
+        if transaction.tag.name == tag.name:
             transactions_by_tag.append(transaction)
     return transactions_by_tag
 
@@ -137,7 +137,7 @@ def get_most_popular_tag():
     max_spend = max(tag_totals)
     max_index = tag_totals.index(max_spend)
 
-    most_popular_tag = all_tags[max_index].name
+    most_popular_tag = all_tags[max_index]
     return most_popular_tag
 
 
