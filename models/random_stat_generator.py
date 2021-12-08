@@ -81,7 +81,7 @@ def get_most_popular_tag_stat():
     popular_tag_total = calculator.get_total_spend(popular_tag_transactions)
     most_popular_tag_string = f"Your favourite tag is {most_popular_tag}. You have spent £{popular_tag_total} on transactions with this tag."
 
-all_functions = [get_total_spend_current_year_stat, get_average_spend_per_month_stat, get_weekly_average_stat, get_daily_average_stat, get_total_for_merchant_stat, get_total_for_tag_stat, get_most_expensive_month_stat, get_most_expensive_month_stat, get_least_expensive_month_stat, get_least_expensive_month_stat, get_most_popular_merchant_stat, get_most_popular_merchant_stat]
+all_functions = [get_total_spend_current_year_stat, get_average_spend_per_month_stat, get_weekly_average_stat, get_daily_average_stat, get_total_for_merchant_stat, get_total_for_merchant_stat, get_total_for_tag_stat, get_total_for_tag_stat, get_most_expensive_month_stat, get_least_expensive_month_stat, get_most_popular_merchant_stat]
 
 
 
