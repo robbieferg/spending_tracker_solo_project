@@ -27,6 +27,12 @@ The user should be able to filter their view of transactions, for example, to vi
 
 TECHNOLOGIES USED
 
+Python
+HTML
+CSS
+PsychoPG2
+SQL
+
 Visual Studio Code
 Flask
 Postico
