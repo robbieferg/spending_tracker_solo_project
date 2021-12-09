@@ -14,7 +14,8 @@
 <h3>Deactivated Tags:</h3>
 <ul>
     {% for tag in deactivated_tags %}
-        <b>Name: </b>{{ tag.name }} <form action="/tags/{{ tag.id }}/delete" class="inline"> <button>Delete</button></form> <form action="/tags/{{ tag.id }}/reactivate" class="inline"> <button>Reactivate</button></form> <hr>
+        <b>{{ tag.name }}</b> <form action="/tags/{{ tag.id }}/delete" class="inline"> <button>Delete</button></form> <form action="/tags/{{ tag.id }}/reactivate" class="inline"> <button>Reactivate</button></form> 
+        <hr>
     {% endfor %}
 </ul>
 <hr>

@@ -17,7 +17,7 @@
         <b>Name: </b>{{ merchant.name }}</a> | <b>Description: </b> {{ merchant.description }}
         <form action="/merchants/{{ merchant.id }}/reactivate" class="inline"><button>Reactivate</button></form>
         <form action="/merchants/{{ merchant.id }}/delete" method='post' class="inline"><button class="delete-button">Delete</button></form>
-        hr
+        <hr>
         {% endfor %}
     </ul>
     <hr>
