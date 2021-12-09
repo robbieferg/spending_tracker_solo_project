@@ -2,7 +2,7 @@
 
 RUNNING INSTRUCTIONS:
 
-This repository can be cloned and opened as a web application using Flask. Command "flask run" in the terminal within the repo directory will activate the local host link, which can be entered into a web browser to display the applications main index page. Basic instructions for using the application are included within the application pages.
+This repository can be cloned and opened as a web application using Flask. To set up database functionality, create new database named "spending_tracker" and run save file "db/spending_tracker.sql" within the repo.  Command "flask run" in the terminal within the repo directory will activate the local host link, which can be entered into a web browser to display the applications main index page. Basic instructions for using the application are included within the application pages.
 
 BRIEF
 
